@@ -1,0 +1,19 @@
+.icon-container {
+    display: flex;
+}
+.icon {
+    font-size: 30rem;
+    margin: 10rem auto;
+    animation: infinite linear;
+    animation-name: iconRotate;
+    animation-duration: 30s;
+}
+
+@keyframes iconRotate {
+    0% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
