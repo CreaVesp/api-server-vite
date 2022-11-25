@@ -15,7 +15,9 @@ export const $users = usersDomain.createStore([])
 $users.on(fetchUsersFx.doneData, (state, payload) => payload.results)
 
 $users.on(changeUser, (state, payload) => {
-    const newState = state.find(user => user.name === payload.name)
-    newState.name = payload.changed
-    return [...state, newState]
+    const newState = [...state]
+    const editedUser = state.find(user => user.name === payload.name)
+    editedUser.name = payload.changed
+    return newState
 })
+$users.watch(state => console.log(state))

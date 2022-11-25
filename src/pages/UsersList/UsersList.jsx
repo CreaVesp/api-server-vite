@@ -3,7 +3,7 @@ import Table from "antd/es/table";
 import {Button, Divider, Spin} from "antd";
 import {Link} from "react-router-dom";
 import {useStore, useEvent} from "effector-react";
-import {fetchUsersFx, $users, changeUser} from "../../store/usersStore.js";
+import {fetchUsersFx, $users, changeUser} from "../../models/users/usersStore.js";
 import {useEffect} from "react";
 
 const UsersList = () => {
@@ -44,8 +44,15 @@ const UsersList = () => {
 
     return <ContentContainer sidebarMenuItems={sidebarMenuItems}>
         <Divider orientation={'left'} orientationMargin={0}>Users List</Divider>
-        <Button onClick={() => changeUser({name: 'Luke Skywalker', changed: 'test'})}>Add user</Button>
-            <Table size={'small'} dataSource={users} columns={columns} loading={pending} bordered/>
+        <Button onClick={() => changeUser({name: 'Luke Skywalker', changed: 'test'})}>Change user</Button>
+            <Table
+                size={'small'}
+                dataSource={users}
+                columns={columns}
+                loading={pending}
+                bordered
+                pagination={{pageSize: 20, position: ['bottomCenter']}}
+            />
     </ContentContainer>
 }
 
