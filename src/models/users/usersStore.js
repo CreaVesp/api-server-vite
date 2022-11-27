@@ -1,6 +1,7 @@
 import {createEvent, createEffect, createStore, forward} from "effector";
 import {createGate} from "effector-react";
 
+// INIT
 export const fetchUsersFx = createEffect(async () => {
     const res = await fetch('https://swapi.dev/api/people')
     const payload = await res.json()
@@ -12,6 +13,8 @@ export const changeUser = createEvent()
 export const $users = createStore([])
 
 export const UsersGate = createGate()
+
+// HANDLERS
 UsersGate.open.watch(() => console.log('open'))
 
 $users.on(fetchUsersFx.doneData, (state, payload) => payload.results

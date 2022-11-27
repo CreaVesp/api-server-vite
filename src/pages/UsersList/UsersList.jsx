@@ -2,9 +2,9 @@ import ContentContainer from "../../components/ContentContainer/ContentContainer
 import Table from "antd/es/table";
 import {Button, Divider, Form} from "antd";
 import {Link} from "react-router-dom";
-import {useStore, useEvent, useGate} from "effector-react";
+import {useStore, useGate} from "effector-react";
 import {fetchUsersFx, $users, changeUser, UsersGate} from "../../models/users/usersStore.js";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import UsersModal from "./modal/UsersModal.jsx";
 
 const UsersList = () => {
@@ -59,7 +59,7 @@ const UsersList = () => {
                 // onClick={() => setEditUserModal(record)}
                 onClick={() => changeUser(
                     {
-                        name: 'test',
+                        name: `test ${record.name}`,
                         birth_year: 1100,
                         height: 200,
                         id: record.id
