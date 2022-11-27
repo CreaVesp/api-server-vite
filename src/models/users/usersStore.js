@@ -12,12 +12,21 @@ export const changeUser = usersDomain.createEvent()
 
 export const $users = usersDomain.createStore([])
 
-$users.on(fetchUsersFx.doneData, (state, payload) => payload.results)
+$users.on(fetchUsersFx.doneData, (state, payload) => payload.results
+    .map(user => (
+        {
+            name: user.name,
+            height: user.height,
+            birth_year: user.birth_year,
+            id: `${user.name}-${user.birth_year}`
+        }
+    ))
+)
 
 $users.on(changeUser, (state, payload) => {
     const newState = [...state]
-    const editedUser = state.find(user => user.name === payload.name)
-    editedUser.name = payload.changed
+    const editedUser = state.findIndex(user => user.id === payload.id)
+    newState[editedUser] = payload
     return newState
 })
 $users.watch(state => console.log(state))
