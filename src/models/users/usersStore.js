@@ -1,16 +1,18 @@
-import {createDomain} from "effector";
+import {createEvent, createEffect, createStore, forward} from "effector";
+import {createGate} from "effector-react";
 
-export const usersDomain = createDomain('users')
-
-export const fetchUsersFx = usersDomain.createEffect(async () => {
+export const fetchUsersFx = createEffect(async () => {
     const res = await fetch('https://swapi.dev/api/people')
     const payload = await res.json()
     return payload
 })
 
-export const changeUser = usersDomain.createEvent()
+export const changeUser = createEvent()
 
-export const $users = usersDomain.createStore([])
+export const $users = createStore([])
+
+export const UsersGate = createGate()
+UsersGate.open.watch(() => console.log('open'))
 
 $users.on(fetchUsersFx.doneData, (state, payload) => payload.results
     .map(user => (
@@ -29,4 +31,11 @@ $users.on(changeUser, (state, payload) => {
     newState[editedUser] = payload
     return newState
 })
+
 $users.watch(state => console.log(state))
+
+forward({
+        from: UsersGate.open,
+        to: fetchUsersFx
+    }
+)

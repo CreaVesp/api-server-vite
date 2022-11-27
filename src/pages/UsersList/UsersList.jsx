@@ -2,8 +2,8 @@ import ContentContainer from "../../components/ContentContainer/ContentContainer
 import Table from "antd/es/table";
 import {Button, Divider, Form} from "antd";
 import {Link} from "react-router-dom";
-import {useStore, useEvent} from "effector-react";
-import {fetchUsersFx, $users, changeUser} from "../../models/users/usersStore.js";
+import {useStore, useEvent, useGate} from "effector-react";
+import {fetchUsersFx, $users, changeUser, UsersGate} from "../../models/users/usersStore.js";
 import {useEffect, useState} from "react";
 import UsersModal from "./modal/UsersModal.jsx";
 
@@ -12,9 +12,8 @@ const UsersList = () => {
 
     const users = useStore($users);
     const pending = useStore(fetchUsersFx.pending)
-    const fetchUsers = useEvent(fetchUsersFx)
 
-    useEffect(() => {fetchUsers()}, [])
+    useGate(UsersGate)
 
     // Users modal functions
     const [form] = Form.useForm()
@@ -57,7 +56,15 @@ const UsersList = () => {
             <Button
                 size={'small'}
                 type={'primary'}
-                onClick={() => setEditUserModal(record)}
+                // onClick={() => setEditUserModal(record)}
+                onClick={() => changeUser(
+                    {
+                        name: 'test',
+                        birth_year: 1100,
+                        height: 200,
+                        id: record.id
+                    }
+                    )}
             >
                     Change user
             </Button>
